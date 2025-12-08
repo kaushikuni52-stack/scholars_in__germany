@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Germany Study Inquiry Form - YES Germany</title>
+    <link rel="stylesheet" href="./css/form.css">
+</head>
+<body>
+
+    <div class="form-page-container">
+        <div class="form-wrapper">
+            <div class="form-header">
+                <h2>Start Your German Dream</h2>
+                <p>Fill in the details below to request a callback from our experts.</p>
+            </div>
+
+            <form id="submissionForm" class="consultation-form">
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="fullname">Full Name</label>
+                        <input type="text" id="fullname" name="Full Name" placeholder="Enter your full name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Gmail Address</label>
+                        <input type="email" id="email" name="Gmail Address" placeholder="example@gmail.com" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="phone">Phone Number</label>
+                        <input type="tel" id="phone" name="Phone Number" placeholder="+91 98765 43210" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="city">City</label>
+                        <input type="text" id="city" name="City" placeholder="Current City" required>
+                    </div>
+                </div>
+
+                <div class="form-row full-width">
+                    <div class="form-group">
+                        <label for="course">Preferred Course</label>
+                        <select id="course" name="Preferred Course" required>
+                            <option value="" disabled selected>Select a course...</option>
+                            <option value="Bachelor's">Bachelor's</option>
+                            <option value="Masters">Masters</option>
+                            <option value="MBA">MBA</option>
+                            <option value="German Language">German Language</option>
+                            <option value="IELTS">IELTS</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-submit">
+                    <button type="submit" class="btn btn-submit">Submit Enquiry</button>
+                </div>
+
+                <p id="formStatus" style="margin-top: 15px; font-weight: bold;"></p>
+
+            </form>
+            </div> 
+    </div>
+    <script>
+        const form = document.getElementById('submissionForm');
+        const status = document.getElementById('formStatus');
+        
+        // --- UPDATED URL FOR SHEETDB ---
+        // REPLACE THIS URL with the unique API URL obtained from SheetDB
+        const sheetDB_URL = "https://sheetdb.io/api/v1/fjcn81r3514sq"; 
+        // -------------------------------
+
+
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            status.textContent = "Submitting...";
+            status.style.color = '#333';
+            
+            const submitButton = form.querySelector('.btn-submit');
+            submitButton.disabled = true;
+
+            const data = new FormData(form);
+            
+            // Convert FormData to a JSON object required by SheetDB
+            const payload = {};
+            data.forEach((value, key) => (payload[key] = value));
+
+            fetch(sheetDB_URL, {
+                method: 'POST',
+                // SheetDB requires these headers for JSON payload
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                // Send the data wrapped in a 'data' object
+                body: JSON.stringify({ data: payload }) 
+            })
+            .then(response => {
+                submitButton.disabled = false;
+                if (!response.ok) {
+                    throw new Error(`SheetDB HTTP error! Status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                // SheetDB returns the successfully inserted row details
+                if (data.created || (Array.isArray(data) && data[0] && data[0].created)) { 
+                    status.textContent = '✅ Success! Your inquiry has been sent.';
+                    status.style.color = 'green';
+                    form.reset(); 
+                } else {
+                    status.textContent = '❌ Submission Error via SheetDB. Check API key/settings.';
+                    status.style.color = 'red';
+                    console.error('SheetDB Error:', data);
+                }
+            })
+            .catch(error => {
+                submitButton.disabled = false; 
+                status.textContent = '❌ Network Error. Check SheetDB URL.';
+                status.style.color = 'red';
+                console.error('Network Error:', error);
+            });
+        });
+    </script>
+
+</body>
+</html>

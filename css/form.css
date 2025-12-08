@@ -1,0 +1,177 @@
+/* --- Global Variables --- */
+:root {
+    --primary-color: #19aaf8; 
+    --primary-color-dark: #19aaf8; /* Darker Purple for hover */
+    --white: #ffffff;
+    --dark-grey: #333;
+    --text-grey: #555;
+    --light-bg: #f4eaff; /* Very light purple background */
+    --border-color: #ddd;
+}
+
+/* --- Base Styles & Centering --- */
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    color: var(--dark-grey);
+    line-height: 1.6;
+    /* Soft gradient background */
+    background: linear-gradient(135deg, var(--white) 0%, var(--light-bg) 100%); 
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center; /* Centers form vertically on the page */
+}
+
+/* Container to hold the form, giving it breathing room */
+.form-page-container {
+    width: 100%;
+    max-width: 1000px;
+    padding: 40px 20px;
+}
+
+/* --- Form Card Styling --- */
+.form-wrapper {
+    background-color: var(--white);
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 50px;
+    border-radius: 15px;
+    /* Lifted effect with purple tinted shadow */
+    box-shadow: 0 15px 40px rgba(155, 76, 220, 0.2); 
+    /* Accent border at the top */
+    border-top: 8px solid var(--primary-color);
+}
+
+.form-header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.form-header h2 {
+    color: var(--primary-color);
+    font-size: 36px;
+    font-weight: 800;
+    margin-bottom: 10px;
+}
+
+.form-header p {
+    color: var(--text-grey);
+    font-size: 17px;
+}
+
+/* --- Input Grid Layout --- */
+.consultation-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.form-row {
+    display: flex;
+    gap: 20px;
+}
+
+.full-width {
+    width: 100%;
+}
+
+.form-group {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group label {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--dark-grey);
+    margin-bottom: 8px;
+}
+
+.form-group input, 
+.form-group select {
+    padding: 14px 15px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    font-size: 16px;
+    background-color: #fcfcfc;
+    transition: all 0.3s ease;
+    font-family: inherit;
+    color: var(--dark-grey);
+}
+
+/* Focus Effect: Theme Purple border and shadow */
+.form-group input:focus, 
+.form-group select:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    background-color: var(--white);
+    box-shadow: 0 0 0 4px rgba(155, 76, 220, 0.2);
+}
+
+/* Style for select dropdown arrow */
+.form-group select {
+    appearance: none; /* Remove default arrow on some browsers */
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2212%22%20height%3D%2212%22%20viewBox%3D%220%200%2012%2012%22%3E%3Cpath%20d%3D%22M10%203.5L6%207.5L2%203.5H10Z%22%20fill%3D%22%239B4CDC%22%2F%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 15px top 50%;
+    background-size: 12px;
+}
+
+/* --- Submit Button --- */
+.form-submit {
+    text-align: center;
+    margin-top: 30px;
+}
+
+.btn-submit {
+    background-color: var(--primary-color);
+    color: var(--white);
+    padding: 16px 50px;
+    border: none;
+    font-size: 18px;
+    font-weight: bold;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    width: 100%; 
+    max-width: 350px; 
+}
+
+.btn-submit:hover {
+    background-color: var(--primary-color-dark); /* Darker purple hover */
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(155, 76, 220, 0.4);
+}
+
+/* --- Status Message --- */
+#formStatus {
+    font-size: 16px;
+    padding: 10px;
+    border-radius: 6px;
+    text-align: center;
+}
+
+/* --- Responsive Adjustments --- */
+@media (max-width: 600px) {
+    .form-wrapper {
+        padding: 30px 15px;
+    }
+    
+    .form-header h2 {
+        font-size: 30px;
+    }
+
+    .form-row {
+        flex-direction: column; /* Stack inputs vertically on small screens */
+        gap: 15px;
+    }
+
+    .btn-submit {
+        max-width: 100%;
+        padding: 14px 20px;
+        font-size: 16px;
+    }
+}

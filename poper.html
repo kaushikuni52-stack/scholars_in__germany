@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YES Germany - Education Consultant (Pop-up Demo)</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* Define Variables (assuming these are in your main.css) */
+        :root {
+            --primary-color: #9B4CDC; 
+            --dark-grey: #333;
+            --text-grey: #555;
+            --white: #ffffff;
+            --red-btn: #ce0000;
+        }
+
+        /* --- Buttons (Needed for modal-cta-btn) --- */
+        .btn {
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-weight: bold;
+            font-size: 14px;
+            text-align: center;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+        .btn:hover { 
+            opacity: 0.85; 
+            transform: translateY(-1px); 
+        }
+
+        /* --- Pop-up / Modal Styles --- */
+
+        /* 1. Overlay: Covers the entire screen */
+        .modal-overlay {
+            display: none; /* Starts hidden */
+            position: fixed;
+            z-index: 200; 
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.6); 
+            backdrop-filter: blur(2px); 
+            /* Added for center alignment of the content */
+            align-items: center; 
+            justify-content: center; 
+        }
+
+        /* 2. Modal Content Box: The white box in the center */
+        .modal-content {
+            background-color: var(--white);
+            padding: 30px;
+            border-radius: 12px;
+            width: 90%; 
+            max-width: 450px; 
+            text-align: center;
+            position: relative;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        /* 3. Close Button (the 'x') */
+        .close-btn {
+            color: var(--dark-grey);
+            position: absolute;
+            top: 15px;
+            right: 25px;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        .close-btn:hover {
+            color: var(--red-btn);
+        }
+
+        /* 4. Top Icon Styling */
+        .modal-icon-container {
+            width: 70px;
+            height: 70px;
+            background-color: var(--primary-color);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0 auto 20px auto;
+        }
+
+        .modal-icon-container i {
+            color: var(--white);
+            font-size: 32px;
+        }
+
+        /* 5. Text Content */
+        .modal-text {
+            margin-bottom: 30px;
+        }
+
+        .modal-headline {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--dark-grey);
+            margin-bottom: 10px;
+        }
+
+        .modal-subheading {
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--primary-color);
+            margin: 0 0 15px 0;
+        }
+
+        .modal-body-text {
+            font-size: 16px;
+            color: var(--text-grey);
+            margin: 0;
+        }
+
+        /* 6. Call-to-Action Button */
+        .modal-cta-btn {
+            width: 100%;
+            padding: 15px 20px;
+            font-size: 16px;
+            background: linear-gradient(to right, #4C2C7A, var(--primary-color)); 
+            color: var(--white);
+            border: none;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .modal-cta-btn i {
+            margin-right: 10px;
+        }
+
+        /* 7. Bottom Features */
+        .modal-features {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            margin-top: 25px;
+        }
+
+        .feature-item {
+            font-size: 13px;
+            color: var(--text-grey);
+            display: flex;
+            align-items: center;
+            margin: 0;
+        }
+
+        .green-dot::before {
+            content: "•";
+            color: #25D366; 
+            font-size: 2em;
+            line-height: 0.5;
+            margin-right: 5px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Welcome to the Website</h1>
+    <p>Scroll down to see the footer content, or wait a few seconds for the modal to appear.</p>
+    
+    <div id="cta-modal" class="modal-overlay">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal()">&times;</span>
+            
+            <div class="modal-icon-container">
+                <i class="fas fa-calendar-alt"></i>
+            </div>
+
+            <div class="modal-text">
+                <p class="modal-headline">🚀 **Ready to Study in Germany?**</p>
+                <h3 class="modal-subheading">Join 1000+ students who achieved their dream!</h3>
+                
+                <p class="modal-body-text">
+                    Get personalized 1-on-1 consultation with our expert counselors. 
+                    Book your **FREE profile evaluation** now and start your journey!
+                </p>
+            </div>
+
+            <a href="form.html" class="btn modal-cta-btn">
+                <i class="fas fa-phone-alt"></i> Book FREE Profile Evaluation
+            </a>
+            
+            <div class="modal-features">
+                <p class="feature-item green-dot">No Credit Card Required</p>
+                <p class="feature-item green-dot">100% Free</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const modal = document.getElementById('cta-modal');
+
+        // Function to display the modal
+        function showModal() {
+            modal.style.display = "flex";
+        }
+
+        // Function to hide the modal
+        function closeModal() {
+            modal.style.display = "none";
+        }
+
+        // Close the modal if the user clicks anywhere outside of the content
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                closeModal();
+            }
+        }
+        
+        // Auto-show the modal after 3 seconds (3000 milliseconds)
+        window.onload = function() {
+            if (modal) {
+                setTimeout(showModal, 3000); 
+            }
+        }
+    </script>
+    </body>
+</html>
